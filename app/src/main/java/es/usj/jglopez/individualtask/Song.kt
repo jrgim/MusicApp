@@ -1,11 +1,13 @@
 package es.usj.jglopez.individualtask
 
-class Song(
-    var id: Long,
-    var title: String,
-    var album: String,
-    var year: Int,
-    var runtime: Int,
-    var rating: Double,
-    var votes: Long
+data class Song(
+    val id: Long,
+    val title: String,
+    val album: String,
+    val year: Int,
+    val runtime: Int,
+    val rating: Int,
+    val votes: Long,
+    val singers: List<Int>,
+    val genres: List<Int>
 )

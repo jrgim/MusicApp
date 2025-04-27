@@ -19,16 +19,14 @@ class Splash : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_splash)
 
-        // Carga datos en background
+        // Esto asegura que la red se hace fuera del main thread
         lifecycleScope.launch {
-            withContext(Dispatchers.IO) {
-                // TODO: Aquí carga los datos del webservice y/o cache
-                delay(2000) // Simula la carga, elimina cuando tengas el webservice
+            val songs = withContext(Dispatchers.IO) {
+                fetchSongs() // Tu función de red
             }
-            // Cuando termina la carga, lanza la siguiente actividad y elimina el Splash del back stack
-            val intent = Intent(this@Splash, MainActivity::class.java)
-            startActivity(intent)
-            finish() // Elimina SplashActivity del back stack
+            SongCache.songs = songs
+            startActivity(Intent(this@Splash, MainActivity::class.java))
+            finish()
         }
     }
 }
