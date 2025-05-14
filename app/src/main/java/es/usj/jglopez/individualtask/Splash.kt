@@ -22,7 +22,7 @@ class Splash : AppCompatActivity() {
         // Esto asegura que la red se hace fuera del main thread
         lifecycleScope.launch {
             val songs = withContext(Dispatchers.IO) {
-                fetchSongs() // Tu función de red
+                fetchSongs() // Función de red
             }
             SongCache.songs = songs
             startActivity(Intent(this@Splash, MainActivity::class.java))

@@ -23,14 +23,13 @@ fun fetchSongs(): List<Song> {
             for (i in 0 until jsonArray.length()) {
                 val obj = jsonArray.getJSONObject(i)
 
-                // Parse singers array
+                // singers and genres are parse to array
                 val singersJson = obj.getJSONArray("singers")
                 val singers = mutableListOf<Int>()
                 for (j in 0 until singersJson.length()) {
                     singers.add(singersJson.getInt(j))
                 }
 
-                // Parse genres array
                 val genresJson = obj.getJSONArray("genres")
                 val genres = mutableListOf<Int>()
                 for (j in 0 until genresJson.length()) {

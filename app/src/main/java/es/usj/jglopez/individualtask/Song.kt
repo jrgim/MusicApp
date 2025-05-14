@@ -9,5 +9,6 @@ data class Song(
     val rating: Int,
     val votes: Long,
     val singers: List<Int>,
+    // TODO: cambiar tipo
     val genres: List<Int>
 )
