@@ -2,10 +2,7 @@ package es.usj.jglopez.individualtask
 
 import android.os.Bundle
 import android.widget.TextView
-import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
 
 class DetailActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -22,8 +19,14 @@ class DetailActivity : AppCompatActivity() {
             findViewById<TextView>(R.id.textViewRuntime).text = "Runtime: ${song.runtime} sec"
             findViewById<TextView>(R.id.textViewRating).text = "Rating: ${song.rating}"
             findViewById<TextView>(R.id.textViewVotes).text = "Votes: ${song.votes}"
-            findViewById<TextView>(R.id.textViewSingers).text = "Singers: ${song.singers.joinToString(", ")}"
-            findViewById<TextView>(R.id.textViewGenres).text = "Genres: ${song.genres.joinToString(", ")}"
+            val singersText = if (song.singers.isNotEmpty())
+                song.singers.joinToString(", ") { it.name }
+            else "No singers"
+            val genresText = if (song.genres.isNotEmpty())
+                song.genres.joinToString(", ") { it.name }
+            else "No genres"
+            findViewById<TextView>(R.id.textViewSingers).text = "Singers: $singersText"
+            findViewById<TextView>(R.id.textViewGenres).text = "Genres: $genresText"
         } else {
             findViewById<TextView>(R.id.textViewTitle).text = "Song not found"
         }

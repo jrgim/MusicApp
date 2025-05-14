@@ -4,7 +4,68 @@ import org.json.JSONArray
 import java.net.HttpURLConnection
 import java.net.URL
 
+fun fetchSingers(): List<Singer> {
+    val url = URL("http://10.0.2.2:8080/singers")
+    val connection = url.openConnection() as HttpURLConnection
+    connection.requestMethod = "GET"
+    connection.connectTimeout = 5000
+    connection.readTimeout = 5000
+
+    val singers = mutableListOf<Singer>()
+    try {
+        val responseCode = connection.responseCode
+        if (responseCode == HttpURLConnection.HTTP_OK) {
+            val response = connection.inputStream.bufferedReader().use { it.readText() }
+            val jsonArray = JSONArray(response)
+            for (i in 0 until jsonArray.length()) {
+                val obj = jsonArray.getJSONObject(i)
+                val singer = Singer(
+                    id = obj.getLong("id"),
+                    name = obj.getString("name")
+                )
+                singers.add(singer)
+            }
+        }
+    } finally {
+        connection.disconnect()
+    }
+    return singers
+}
+
+fun fetchGenres(): List<Genre> {
+    val url = URL("http://10.0.2.2:8080/genres")
+    val connection = url.openConnection() as HttpURLConnection
+    connection.requestMethod = "GET"
+    connection.connectTimeout = 5000
+    connection.readTimeout = 5000
+
+    val genres = mutableListOf<Genre>()
+    try {
+        val responseCode = connection.responseCode
+        if (responseCode == HttpURLConnection.HTTP_OK) {
+            val response = connection.inputStream.bufferedReader().use { it.readText() }
+            val jsonArray = JSONArray(response)
+            for (i in 0 until jsonArray.length()) {
+                val obj = jsonArray.getJSONObject(i)
+                val genre = Genre(
+                    id = obj.getLong("id"),
+                    name = obj.getString("name")
+                )
+                genres.add(genre)
+            }
+        }
+    } finally {
+        connection.disconnect()
+    }
+    return genres
+}
+
+
 fun fetchSongs(): List<Song> {
+    // Primero obtenemos todos los cantantes y géneros
+    val allSingers = fetchSingers()
+    val allGenres = fetchGenres()
+
     val url = URL("http://10.0.2.2:8080/songs")
     val connection = url.openConnection() as HttpURLConnection
     connection.requestMethod = "GET"
@@ -23,17 +84,21 @@ fun fetchSongs(): List<Song> {
             for (i in 0 until jsonArray.length()) {
                 val obj = jsonArray.getJSONObject(i)
 
-                // singers and genres are parse to array
+                // singers y genres como listas de IDs
                 val singersJson = obj.getJSONArray("singers")
-                val singers = mutableListOf<Int>()
+                val singerList = mutableListOf<Singer>()
                 for (j in 0 until singersJson.length()) {
-                    singers.add(singersJson.getInt(j))
+                    val singerId = singersJson.getLong(j)
+                    // Busca el objeto Singer por ID
+                    allSingers.find { it.id == singerId }?.let { singerList.add(it) }
                 }
 
                 val genresJson = obj.getJSONArray("genres")
-                val genres = mutableListOf<Int>()
+                val genreList = mutableListOf<Genre>()
                 for (j in 0 until genresJson.length()) {
-                    genres.add(genresJson.getInt(j))
+                    val genreId = genresJson.getLong(j)
+                    // Busca el objeto Genre por ID
+                    allGenres.find { it.id == genreId }?.let { genreList.add(it) }
                 }
 
                 val song = Song(
@@ -44,8 +109,8 @@ fun fetchSongs(): List<Song> {
                     runtime = obj.getInt("runtime"),
                     rating = obj.getInt("rating"),
                     votes = obj.getLong("votes"),
-                    singers = singers,
-                    genres = genres
+                    singers = singerList,
+                    genres = genreList
                 )
                 songs.add(song)
             }

@@ -8,7 +8,7 @@ data class Song(
     val runtime: Int,
     val rating: Int,
     val votes: Long,
-    val singers: List<Int>,
-    // TODO: cambiar tipo
-    val genres: List<Int>
+    val singers: List<Singer>,
+    val genres: List<Genre>,
+    var isFavorite: Boolean = false
 )
