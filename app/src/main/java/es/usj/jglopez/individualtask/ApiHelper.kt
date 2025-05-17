@@ -60,12 +60,8 @@ fun fetchGenres(): List<Genre> {
     return genres
 }
 
-
+// Ahora fetchSongs usa los caches existentes para mapear los IDs a objetos
 fun fetchSongs(): List<Song> {
-    // Primero obtenemos todos los cantantes y géneros
-    val allSingers = fetchSingers()
-    val allGenres = fetchGenres()
-
     val url = URL("http://10.0.2.2:8080/songs")
     val connection = url.openConnection() as HttpURLConnection
     connection.requestMethod = "GET"
@@ -89,16 +85,16 @@ fun fetchSongs(): List<Song> {
                 val singerList = mutableListOf<Singer>()
                 for (j in 0 until singersJson.length()) {
                     val singerId = singersJson.getLong(j)
-                    // Busca el objeto Singer por ID
-                    allSingers.find { it.id == singerId }?.let { singerList.add(it) }
+                    // Busca el objeto Singer por ID en SingerCache
+                    SingerCache.singers.find { it.id == singerId }?.let { singerList.add(it) }
                 }
 
                 val genresJson = obj.getJSONArray("genres")
                 val genreList = mutableListOf<Genre>()
                 for (j in 0 until genresJson.length()) {
                     val genreId = genresJson.getLong(j)
-                    // Busca el objeto Genre por ID
-                    allGenres.find { it.id == genreId }?.let { genreList.add(it) }
+                    // Busca el objeto Genre por ID en GenreCache
+                    GenreCache.genres.find { it.id == genreId }?.let { genreList.add(it) }
                 }
 
                 val song = Song(

@@ -19,12 +19,15 @@ class Splash : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_splash)
 
-        // Esto asegura que la red se hace fuera del main thread
         lifecycleScope.launch {
-            val songs = withContext(Dispatchers.IO) {
-                fetchSongs() // Función de red
-            }
-            SongCache.songs = songs
+            // 1. Cargar géneros y cantantes primero y guardarlos en cache
+            GenreCache.genres = withContext(Dispatchers.IO) { fetchGenres() }
+            SingerCache.singers = withContext(Dispatchers.IO) { fetchSingers() }
+
+            // 2. Ahora cargar canciones usando los caches
+            SongCache.songs = withContext(Dispatchers.IO) { fetchSongs() }
+
+            // 3. Lanza la MainActivity
             startActivity(Intent(this@Splash, MainActivity::class.java))
             finish()
         }
