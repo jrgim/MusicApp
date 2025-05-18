@@ -41,7 +41,7 @@ class MainActivity : AppCompatActivity() {
         }
 
         buttonContact.setOnClickListener {
-            val intent = Intent(this, contact::class.java)
+            val intent = Intent(this, Contact::class.java)
             startActivity(intent)
         }
 

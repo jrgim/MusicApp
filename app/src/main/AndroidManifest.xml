@@ -28,7 +28,7 @@
             android:name=".activities.EmailActivity"
             android:exported="false" />
         <activity
-            android:name=".activities.contact"
+            android:name=".activities.Contact"
             android:exported="false" />
         <activity
             android:name=".activities.MainActivity"
