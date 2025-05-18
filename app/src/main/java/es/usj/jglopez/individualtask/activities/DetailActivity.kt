@@ -1,8 +1,10 @@
-package es.usj.jglopez.individualtask
+package es.usj.jglopez.individualtask.activities
 
 import android.os.Bundle
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import es.usj.jglopez.individualtask.R
+import es.usj.jglopez.individualtask.model.SongCache
 
 class DetailActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -19,6 +21,12 @@ class DetailActivity : AppCompatActivity() {
             findViewById<TextView>(R.id.textViewRuntime).text = "Runtime: ${song.runtime} sec"
             findViewById<TextView>(R.id.textViewRating).text = "Rating: ${song.rating}"
             findViewById<TextView>(R.id.textViewVotes).text = "Votes: ${song.votes}"
+            val textViewFavorite = findViewById<TextView>(R.id.textViewFavorite)
+            if (song.isFavorite) {
+                textViewFavorite.text = "The song is favorite"
+            } else {
+                textViewFavorite.text = "" // Establece una cadena vacía si no es favorita
+            }
             val singersText = if (song.singers.isNotEmpty())
                 song.singers.joinToString(", ") { it.name }
             else "No singers"

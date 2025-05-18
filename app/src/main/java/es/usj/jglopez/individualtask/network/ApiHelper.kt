@@ -1,5 +1,10 @@
-package es.usj.jglopez.individualtask
+package es.usj.jglopez.individualtask.network
 
+import es.usj.jglopez.individualtask.model.Genre
+import es.usj.jglopez.individualtask.model.GenreCache
+import es.usj.jglopez.individualtask.model.Singer
+import es.usj.jglopez.individualtask.model.SingerCache
+import es.usj.jglopez.individualtask.model.Song
 import org.json.JSONArray
 import java.net.HttpURLConnection
 import java.net.URL

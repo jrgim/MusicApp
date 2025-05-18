@@ -1,4 +1,4 @@
-package es.usj.jglopez.individualtask
+package es.usj.jglopez.individualtask.activities
 
 import android.os.Bundle
 import android.widget.ArrayAdapter
@@ -7,6 +7,13 @@ import android.widget.EditText
 import android.widget.Spinner
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import es.usj.jglopez.individualtask.model.Genre
+import es.usj.jglopez.individualtask.model.GenreCache
+import es.usj.jglopez.individualtask.R
+import es.usj.jglopez.individualtask.model.Singer
+import es.usj.jglopez.individualtask.model.SingerCache
+import es.usj.jglopez.individualtask.model.Song
+import es.usj.jglopez.individualtask.model.SongCache
 
 class AddEditSongActivity : AppCompatActivity() {
     private var editingSong: Song? = null

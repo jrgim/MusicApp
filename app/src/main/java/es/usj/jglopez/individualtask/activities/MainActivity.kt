@@ -1,4 +1,4 @@
-package es.usj.jglopez.individualtask
+package es.usj.jglopez.individualtask.activities
 
 import android.content.Intent
 import android.os.Bundle
@@ -6,6 +6,10 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.ListView
 import androidx.appcompat.app.AppCompatActivity
+import es.usj.jglopez.individualtask.R
+import es.usj.jglopez.individualtask.model.Song
+import es.usj.jglopez.individualtask.adapters.SongAdapter
+import es.usj.jglopez.individualtask.model.SongCache
 
 class MainActivity : AppCompatActivity() {
     private lateinit var adapter: SongAdapter

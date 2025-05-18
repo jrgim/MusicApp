@@ -1,6 +1,6 @@
-package es.usj.jglopez.individualtask
+package es.usj.jglopez.individualtask.model
 
-data class Singer(
+data class Genre(
     val id: Long,
     val name: String,
     val songs: List<Song> = emptyList()

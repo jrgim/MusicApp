@@ -16,25 +16,25 @@
         android:theme="@style/Theme.IndividualTask"
         tools:targetApi="31">
         <activity
-            android:name=".AddEditSongActivity"
+            android:name=".activities.AddEditSongActivity"
             android:exported="false" />
         <activity
-            android:name=".DetailActivity"
+            android:name=".activities.DetailActivity"
             android:exported="false" />
         <activity
-            android:name=".CallActivity"
+            android:name=".activities.CallActivity"
             android:exported="false" />
         <activity
-            android:name=".EmailActivity"
+            android:name=".activities.EmailActivity"
             android:exported="false" />
         <activity
-            android:name=".contact"
+            android:name=".activities.contact"
             android:exported="false" />
         <activity
-            android:name=".MainActivity"
+            android:name=".activities.MainActivity"
             android:exported="false" /> <!-- Aqui se pone para que se inicie Splash -->
         <activity
-            android:name=".Splash"
+            android:name=".activities.Splash"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

@@ -1,16 +1,19 @@
-package es.usj.jglopez.individualtask
+package es.usj.jglopez.individualtask.activities
 
 import android.os.Bundle
-import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
 
 import android.content.Intent
 
 import androidx.lifecycle.lifecycleScope
+import es.usj.jglopez.individualtask.model.GenreCache
+import es.usj.jglopez.individualtask.R
+import es.usj.jglopez.individualtask.model.SingerCache
+import es.usj.jglopez.individualtask.model.SongCache
+import es.usj.jglopez.individualtask.network.fetchGenres
+import es.usj.jglopez.individualtask.network.fetchSingers
+import es.usj.jglopez.individualtask.network.fetchSongs
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 

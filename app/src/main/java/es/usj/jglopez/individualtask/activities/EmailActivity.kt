@@ -1,10 +1,11 @@
-package es.usj.jglopez.individualtask
+package es.usj.jglopez.individualtask.activities
 
 import android.os.Bundle
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import es.usj.jglopez.individualtask.R
 
 class EmailActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
