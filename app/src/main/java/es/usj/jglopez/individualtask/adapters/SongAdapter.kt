@@ -1,54 +1,79 @@
 package es.usj.jglopez.individualtask.adapters
 
-import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ArrayAdapter
+import android.widget.BaseAdapter
 import android.widget.ImageView
 import android.widget.TextView
 import es.usj.jglopez.individualtask.R
 import es.usj.jglopez.individualtask.model.Song
 
-class SongAdapter(context: Context, songs: List<Song>) :
-    ArrayAdapter<Song>(context, 0, songs) {
-    override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
-        val itemView = convertView ?: LayoutInflater.from(context)
-            .inflate(R.layout.item_song, parent, false)
+class SongAdapter : BaseAdapter() {
 
-        val song = getItem(position)!!
+    private var songs: List<Song> = emptyList()
 
-        val titleText = itemView.findViewById<TextView>(R.id.textViewTitle)
-        val albumText = itemView.findViewById<TextView>(R.id.textViewAlbum)
-        val yearText = itemView.findViewById<TextView>(R.id.textViewYear)
-        val favoriteOff = itemView.findViewById<ImageView>(R.id.favoriteOff)
-        val favoriteOn = itemView.findViewById<ImageView>(R.id.favoriteOn)
+    fun updateList(newList: List<Song>) {
+        songs = newList
+        notifyDataSetChanged()
+    }
 
-        titleText.text = song.title
-        albumText.text = song.album
-        yearText.text = song.year.toString()
+    override fun getCount(): Int = songs.size
 
-        // Mostrar solo el icono correspondiente
-        if (song.isFavorite) {
-            favoriteOn.visibility = View.VISIBLE
-            favoriteOff.visibility = View.GONE
+    override fun getItem(position: Int): Song = songs[position]
+
+    override fun getItemId(position: Int): Long = songs[position].id
+
+    override fun getView(position: Int, convertView: View?, parent: ViewGroup?): View {
+        val holderView: View
+        val viewHolder: ViewHolder
+
+        if (convertView == null) {
+            holderView = LayoutInflater.from(parent?.context).inflate(R.layout.item_song, parent, false)
+            viewHolder = ViewHolder(
+                holderView.findViewById(R.id.textViewTitle),
+                holderView.findViewById(R.id.textViewAlbum),
+                holderView.findViewById(R.id.textViewYear),
+                holderView.findViewById(R.id.favoriteOff),
+                holderView.findViewById(R.id.favoriteOn)
+            )
+            holderView.tag = viewHolder
         } else {
-            favoriteOn.visibility = View.GONE
-            favoriteOff.visibility = View.VISIBLE
+            holderView = convertView
+            viewHolder = holderView.tag as ViewHolder
         }
 
-        // Listener para marcar como favorito
-        favoriteOff.setOnClickListener {
+        val song = getItem(position)
+        viewHolder.title.text = song.title
+        viewHolder.album.text = song.album
+        viewHolder.year.text = song.year.toString()
+
+        // Favoritos: muestra solo uno de los dos corazones
+        if (song.isFavorite) {
+            viewHolder.favoriteOn.visibility = View.VISIBLE
+            viewHolder.favoriteOff.visibility = View.GONE
+        } else {
+            viewHolder.favoriteOn.visibility = View.GONE
+            viewHolder.favoriteOff.visibility = View.VISIBLE
+        }
+
+        viewHolder.favoriteOff.setOnClickListener {
             song.isFavorite = true
             notifyDataSetChanged()
         }
-
-        // Listener para quitar de favoritos
-        favoriteOn.setOnClickListener {
+        viewHolder.favoriteOn.setOnClickListener {
             song.isFavorite = false
             notifyDataSetChanged()
         }
 
-        return itemView
+        return holderView
     }
+
+    data class ViewHolder(
+        val title: TextView,
+        val album: TextView,
+        val year: TextView,
+        val favoriteOff: ImageView,
+        val favoriteOn: ImageView
+    )
 }
