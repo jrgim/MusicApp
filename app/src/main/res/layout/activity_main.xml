@@ -50,7 +50,6 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toStartOf="@id/buttonAddEdit"
-        app:layout_constraintHorizontal_chainStyle="spread"
         android:layout_marginStart="16dp"
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="16dp"/>
@@ -62,6 +61,18 @@
         android:text="Add/Edit"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toEndOf="@id/buttonContact"
+        app:layout_constraintEnd_toStartOf="@id/buttonToggleFavorites"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="16dp"/>
+
+    <Button
+        android:id="@+id/buttonToggleFavorites"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Show Favorites"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="@id/buttonAddEdit"
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_marginStart="8dp"
         android:layout_marginEnd="16dp"

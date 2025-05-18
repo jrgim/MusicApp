@@ -16,6 +16,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var allSongs: List<Song>
     private lateinit var listView: ListView
     private lateinit var editTextSearch: EditText
+    private var showingFavorites = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -26,6 +27,7 @@ class MainActivity : AppCompatActivity() {
         val buttonSearch = findViewById<Button>(R.id.btnSearch)
         val buttonContact = findViewById<Button>(R.id.buttonContact)
         val buttonAddEdit = findViewById<Button>(R.id.buttonAddEdit)
+        val buttonToggleFavorites = findViewById<Button>(R.id.buttonToggleFavorites)
 
         allSongs = SongCache.songs
         adapter = SongAdapter(this, allSongs)
@@ -46,9 +48,9 @@ class MainActivity : AppCompatActivity() {
         buttonSearch.setOnClickListener {
             val query = editTextSearch.text.toString().trim()
             val filtered = if (query.isEmpty()) {
-                allSongs
+                getCurrentSongList()
             } else {
-                allSongs.filter { it.title.contains(query, ignoreCase = true) }
+                getCurrentSongList().filter { it.title.contains(query, ignoreCase = true) }
             }
             adapter = SongAdapter(this, filtered)
             listView.adapter = adapter
@@ -65,12 +67,26 @@ class MainActivity : AppCompatActivity() {
             startActivity(intent)
             true
         }
+        buttonToggleFavorites.setOnClickListener {
+            showingFavorites = !showingFavorites
+            updateSongList()
+            buttonToggleFavorites.text = if (showingFavorites) "Show All" else "Show Favorites"
+        }
     }
 
     override fun onResume() {
         super.onResume()
-        // Actualiza allSongs y el adapter cada vez que vuelves a MainActivity
-        allSongs = SongCache.songs
+        updateSongList()
+    }
+    private fun getCurrentSongList(): List<Song> {
+        return if (showingFavorites) {
+            SongCache.songs.filter { it.isFavorite }
+        } else {
+            SongCache.songs
+        }
+    }
+    private fun updateSongList() {
+        allSongs = getCurrentSongList()
         adapter = SongAdapter(this, allSongs)
         listView.adapter = adapter
     }
