@@ -4,11 +4,16 @@ import android.os.Bundle
 import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.lifecycleScope
 import es.usj.jglopez.individualtask.databinding.ActivityAddEditSongBinding
 import es.usj.jglopez.individualtask.model.GenreCache
 import es.usj.jglopez.individualtask.model.SingerCache
 import es.usj.jglopez.individualtask.model.Song
 import es.usj.jglopez.individualtask.model.SongCache
+import es.usj.jglopez.individualtask.network.*
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class AddEditSongActivity : AppCompatActivity() {
     private val view by lazy { ActivityAddEditSongBinding.inflate(layoutInflater) }
@@ -65,37 +70,47 @@ class AddEditSongActivity : AppCompatActivity() {
                 return@setOnClickListener
             }
 
-            if (editingSong == null) {
-                // Crear nueva canción
-                val newSong = Song(
-                    id = System.currentTimeMillis(),
-                    title = title,
-                    album = album,
-                    year = year,
-                    runtime = runtime,
-                    rating = rating,
-                    votes = votes,
-                    genres = listOf(selectedGenre),
-                    singers = listOf(selectedSinger)
-                )
-                SongCache.songs = SongCache.songs + newSong
-            } else {
-                // Editar canción existente usando copy()
-                val updatedSong = editingSong!!.copy(
-                    title = title,
-                    album = album,
-                    year = year,
-                    runtime = runtime,
-                    rating = rating,
-                    votes = votes,
-                    genres = listOf(selectedGenre),
-                    singers = listOf(selectedSinger)
-                )
-                SongCache.songs = SongCache.songs.map { if (it.id == updatedSong.id) updatedSong else it }
+            lifecycleScope.launch {
+                val success = withContext(Dispatchers.IO) {
+                    if (editingSong == null) {
+                        // POST (crear)
+                        val newSong = Song(
+                            id = 0, // El servidor asigna el ID
+                            title = title,
+                            album = album,
+                            year = year,
+                            runtime = runtime,
+                            rating = rating,
+                            votes = votes,
+                            genres = listOf(selectedGenre),
+                            singers = listOf(selectedSinger)
+                        )
+                        postSong(newSong)
+                    } else {
+                        // PUT (editar)
+                        val updatedSong = editingSong!!.copy(
+                            title = title,
+                            album = album,
+                            year = year,
+                            runtime = runtime,
+                            rating = rating,
+                            votes = votes,
+                            genres = listOf(selectedGenre),
+                            singers = listOf(selectedSinger)
+                        )
+                        putSong(updatedSong)
+                    }
+                }
+                if (success) {
+                    // Recarga la lista desde la API y actualiza el caché local
+                    val updatedList = withContext(Dispatchers.IO) { fetchSongs() }
+                    SongCache.songs = updatedList
+                    setResult(RESULT_OK)
+                    finish()
+                } else {
+                    Toast.makeText(this@AddEditSongActivity, "Error saving song", Toast.LENGTH_SHORT).show()
+                }
             }
-
-            setResult(RESULT_OK)
-            finish()
         }
     }
 }
