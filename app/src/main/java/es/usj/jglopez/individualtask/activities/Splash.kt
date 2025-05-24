@@ -2,6 +2,7 @@ package es.usj.jglopez.individualtask.activities
 
 import android.content.Intent
 import android.os.Bundle
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import es.usj.jglopez.individualtask.databinding.ActivitySplashBinding
@@ -11,6 +12,7 @@ import es.usj.jglopez.individualtask.model.SongCache
 import es.usj.jglopez.individualtask.network.fetchGenres
 import es.usj.jglopez.individualtask.network.fetchSingers
 import es.usj.jglopez.individualtask.network.fetchSongs
+import es.usj.jglopez.individualtask.network.isApiReachable
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -23,6 +25,17 @@ class Splash : AppCompatActivity() {
         setContentView(view.root)
 
         lifecycleScope.launch {
+            val ok = withContext(Dispatchers.IO) { isApiReachable() }
+            if (!ok) {
+                withContext(Dispatchers.Main) {
+                    Toast.makeText(
+                        this@Splash,
+                        "API server isn't available.",
+                        Toast.LENGTH_LONG
+                    ).show()
+                }
+                return@launch
+            }
             // 1. Cargar géneros y cantantes primero y guardarlos en cache
             GenreCache.genres = withContext(Dispatchers.IO) { fetchGenres() }
             SingerCache.singers = withContext(Dispatchers.IO) { fetchSingers() }

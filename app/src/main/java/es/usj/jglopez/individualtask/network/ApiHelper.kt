@@ -1,6 +1,5 @@
 package es.usj.jglopez.individualtask.network
 
-import android.util.Log
 import es.usj.jglopez.individualtask.model.Genre
 import es.usj.jglopez.individualtask.model.GenreCache
 import es.usj.jglopez.individualtask.model.Singer
@@ -11,6 +10,22 @@ import org.json.JSONObject
 import java.io.OutputStreamWriter
 import java.net.HttpURLConnection
 import java.net.URL
+
+fun isApiReachable(): Boolean {
+    return try {
+        val connection = (URL("http://10.0.2.2:8080/songs").openConnection() as HttpURLConnection).apply {
+            connectTimeout = 3000
+            readTimeout = 3000
+            requestMethod = "HEAD"
+        }
+        connection.connect()
+        val code = connection.responseCode
+        connection.disconnect()
+        code in 200..399
+    } catch (_: Exception) {
+        false
+    }
+}
 
 fun fetchSingers(): List<Singer> {
     val url = URL("http://10.0.2.2:8080/singers")
