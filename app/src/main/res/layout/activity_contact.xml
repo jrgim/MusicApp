@@ -22,7 +22,7 @@
             android:layout_width="match_parent"
             android:layout_height="84dp"
             android:fontFamily="serif"
-            android:text="Contact"
+            android:text="@string/contact"
             android:textAlignment="center"
             android:textAllCaps="false"
             android:textAppearance="@style/TextAppearance.AppCompat.Display1"
@@ -33,7 +33,7 @@
             android:id="@+id/textViewEmail"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="alu.139992@usj.es"
+            android:text="@string/alu_139992_usj_es"
             android:textAlignment="center"
             android:textAppearance="@style/TextAppearance.AppCompat.Body1"
             android:textSize="20sp" />
@@ -43,7 +43,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="24dp"
-            android:text="+34 111 111 111"
+            android:text="@string/_34_111_111_111"
             android:textAlignment="center"
             android:textAllCaps="false"
             android:textAppearance="@style/TextAppearance.AppCompat.Body1"
@@ -53,13 +53,13 @@
             android:id="@+id/buttonEmail"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Send Email" />
+            android:text="@string/send_emailbtn" />
 
         <Button
             android:id="@+id/buttonCall"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Call" />
+            android:text="@string/callbtn" />
 
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

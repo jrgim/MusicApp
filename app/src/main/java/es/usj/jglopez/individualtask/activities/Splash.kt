@@ -6,13 +6,8 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import es.usj.jglopez.individualtask.databinding.ActivitySplashBinding
-import es.usj.jglopez.individualtask.model.GenreCache
-import es.usj.jglopez.individualtask.model.SingerCache
-import es.usj.jglopez.individualtask.model.SongCache
-import es.usj.jglopez.individualtask.network.fetchGenres
-import es.usj.jglopez.individualtask.network.fetchSingers
-import es.usj.jglopez.individualtask.network.fetchSongs
-import es.usj.jglopez.individualtask.network.isApiReachable
+import es.usj.jglopez.individualtask.model.*
+import es.usj.jglopez.individualtask.network.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext

@@ -3,4 +3,10 @@
     <string name="send_sms">Send SMS</string>
     <string name="call">Call</string>
     <string name="send_email">Send Email</string>
+    <string name="contact">Contact</string>
+    <string name="alu_139992_usj_es">alu.139992@usj.es</string>
+    <string name="_34_111_111_111">+34 111 111 111</string>
+    <string name="send_emailbtn">Send Email</string>
+    <string name="callbtn">Call</string>
+    <string name="search">Search</string>
 </resources>

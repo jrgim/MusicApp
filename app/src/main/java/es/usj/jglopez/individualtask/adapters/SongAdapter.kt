@@ -22,7 +22,7 @@ class SongAdapter : BaseAdapter() {
 
     override fun getItem(position: Int): Song = songs[position]
 
-    override fun getItemId(position: Int): Long = songs[position].id
+    override fun getItemId(position: Int): Long = songs[position].id // TODO: reivsar si se usa
 
     override fun getView(position: Int, convertView: View?, parent: ViewGroup?): View {
         val holderView: View
@@ -48,7 +48,7 @@ class SongAdapter : BaseAdapter() {
         viewHolder.album.text = song.album
         viewHolder.year.text = song.year.toString()
 
-        // Favoritos: muestra solo uno de los dos corazones
+        // Favourite visibility
         if (song.isFavorite) {
             viewHolder.favoriteOn.visibility = View.VISIBLE
             viewHolder.favoriteOff.visibility = View.GONE

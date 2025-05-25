@@ -2,7 +2,6 @@ package es.usj.jglopez.individualtask.activities
 
 import android.content.Intent
 import android.os.Bundle
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import es.usj.jglopez.individualtask.adapters.SongAdapter
 import es.usj.jglopez.individualtask.databinding.ActivityMainBinding
