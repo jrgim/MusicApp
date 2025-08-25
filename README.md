@@ -32,7 +32,7 @@ Cada canción incluye:
 - **Conectividad de red** con verificación de API
 - **Cache local** para funcionamiento offline
 - **Pantalla de contacto** con opciones de llamada, email y SMS
-- **Interfaz intuitiva** con Material Design
+- **Interfaz intuitiva**
 - **Modo favoritos** para filtrar canciones preferidas
 
 ## 🏗️ Arquitectura Técnica
@@ -71,32 +71,11 @@ La aplicación se conecta a una API REST que debe estar ejecutándose en:
 http://10.0.2.2:8080
 ```
 
-### Endpoints Requeridos
+### Cómo ejecutar la API con Docker
 
-#### Canciones
-- `GET /songs` - Obtener todas las canciones
-- `POST /songs` - Crear nueva canción
-- `PUT /songs` - Actualizar canción existente
-
-#### Cantantes
-- `GET /singers` - Obtener todos los cantantes
-
-#### Géneros
-- `GET /genres` - Obtener todos los géneros
-
-### Formato JSON de Canción
-```json
-{
-  "id": 1,
-  "title": "Nombre de la canción",
-  "album": "Nombre del álbum",
-  "year": 2024,
-  "runtime": 240,
-  "rating": 8,
-  "votes": 1500,
-  "singers": [1, 2],
-  "genres": [1]
-}
+```sh
+docker pull anselm82/music-api:latest
+docker run -p 8080:8080 anselm82/music-api
 ```
 
 ## 🚀 Instalación y Configuración
@@ -156,9 +135,8 @@ http://10.0.2.2:8080
 - **Marcar favorito**: Disponible desde la pantalla de detalles
 
 ### Pantalla de Contacto
-- **Llamar**: +34 111 111 111
-- **Email**: alu.139992@usj.es
-- **SMS**: Enviar mensaje de texto
+- **Llamar**: numero de ejemplo
+- **Email**: correo de ejemplo
 
 ## 🔧 Configuración de Desarrollo
 
@@ -227,15 +205,4 @@ La aplicación utiliza un sistema de cache local para mejorar el rendimiento:
 3. **Sincronización**: Actualiza cache después de modificaciones
 4. **UI Updates**: Interfaz se actualiza automáticamente
 
-## 📄 Licencia
-
-Este proyecto es parte de una tarea individual académica para la Universidad San Jorge (USJ).
-
-## 📞 Contacto
-
-- **Email**: alu.139992@usj.es
-- **Teléfono**: +34 111 111 111
-
----
-
-**Nota**: Esta aplicación está diseñada para propósitos educativos y como demostración de desarrollo Android con Kotlin.
+## 📄 Este proyecto es parte de una tarea individual académica en la Universidad San Jorge (USJ)
